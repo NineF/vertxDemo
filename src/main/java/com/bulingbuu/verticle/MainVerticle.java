@@ -9,6 +9,6 @@ import io.vertx.core.AbstractVerticle;
 public class MainVerticle extends AbstractVerticle {
     @Override
     public void start() {
-        vertx.deployVerticle(MyFirstVerticle.class.getName());
+        vertx.deployVerticle(MyWebVerticle.class.getName());
     }
 }

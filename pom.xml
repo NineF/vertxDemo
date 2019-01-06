@@ -12,6 +12,7 @@
     <vertx.version>3.6.2</vertx.version>
     <main.class>io.vertx.core.Launcher</main.class>
     <main.verticle>com.bulingbuu.verticle.MainVerticle</main.verticle>
+    <logback_versin>1.2.3</logback_versin>
   </properties>
 
 
@@ -19,6 +20,18 @@
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-core</artifactId>
+      <version>${vertx.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-web</artifactId>
+      <version>${vertx.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-mysql-postgresql-client</artifactId>
       <version>${vertx.version}</version>
     </dependency>
 
@@ -33,11 +46,24 @@
       <artifactId>vertx-jdbc-client</artifactId>
       <version>${vertx.version}</version>
     </dependency>
+
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-unit</artifactId>
       <version>${vertx.version}</version>
       <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback_versin}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-core</artifactId>
+      <version>${logback_versin}</version>
     </dependency>
 
     <dependency>

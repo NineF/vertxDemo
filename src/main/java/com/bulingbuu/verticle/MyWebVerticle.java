@@ -12,8 +12,6 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.asyncsql.AsyncSQLClient;
 import io.vertx.ext.asyncsql.MySQLClient;
-import io.vertx.ext.jdbc.JDBCClient;
-import io.vertx.ext.sql.ResultSet;
 import io.vertx.ext.sql.SQLConnection;
 import io.vertx.ext.sql.UpdateResult;
 import io.vertx.ext.web.Router;
@@ -21,7 +19,6 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -77,12 +74,12 @@ public class MyWebVerticle extends AbstractVerticle {
         Router router = Router.router(vertx);
 
         // Bind "/" to our hello message.
-//        router.route("/").handler(routingContext -> {
-//            HttpServerResponse response = routingContext.response();
-//            response
-//                    .putHeader("content-type", "text/html")
-//                    .end("<h1>Hello from my first Vert.x 3 application</h1>");
-//        });
+        router.route("/").handler(routingContext -> {
+            HttpServerResponse response = routingContext.response();
+            response
+                    .putHeader("content-type", "text/html")
+                    .end("<h1>Hello from my first Vert.x 3 application</h1>");
+        });
 
         router.route("/assets/*").handler(StaticHandler.create("assets"));
 
@@ -259,9 +256,7 @@ public class MyWebVerticle extends AbstractVerticle {
         mySQLClient.getConnection(ar -> {
             SQLConnection connection = ar.result();
             connection.query("SELECT * FROM Whisky", result -> {
-                ResultSet set = result.result();
                 List<Whisky> whiskies = result.result().getResults().stream().map(Whisky::new).collect(Collectors.toList());
-                System.out.println(Json.encodePrettily(whiskies));
                 routingContext.response()
                         .putHeader("content-type", "application/json; charset=utf-8")
                         .end(Json.encodePrettily(whiskies));
@@ -276,7 +271,7 @@ public class MyWebVerticle extends AbstractVerticle {
                 resultHandler.handle(Future.failedFuture("Whisky not found"));
             } else {
                 if (ar.result().getNumRows() >= 1) {
-                    resultHandler.handle(Future.succeededFuture(new Whisky(ar.result().getRows().get(0))));
+                    resultHandler.handle(Future.succeededFuture(new Whisky(ar.result().getResults().get(0))));
                 } else {
                     resultHandler.handle(Future.failedFuture("Whisky not found"));
                 }
